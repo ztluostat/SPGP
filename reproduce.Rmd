@@ -1,0 +1,195 @@
+---
+title: Reproducing Main Results in "A Nonstationary Soft Partitioned Gaussian Process Model via Random Spanning Trees"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = FALSE)
+library(ggplot2)
+```
+
+## Introduction
+
+This document reproduces main simulation (Section 4) and real data application (Section 5) results in "A Nonstationary Soft Partitioned Gaussian Process Model via Random Spanning Trees"
+
+By default, this document generates figures and tables from pre-computed results to save computation time. To re-run model fitting and prediction of SPGP and its major competitor TGP, change the following options accordingly, and then re-compile this R Markdown document. Please note that it can take serveral hours to several days to re-run SPGP and TGP.
+
+```{r options, echo = TRUE}
+# NOTE: Re-running models can take several hours to several days.
+gen_sim_input = FALSE   # whether to re-generate simulation input data
+fit_SPGP_sim = FALSE    # whether to re-run SPGP model for simulation
+fit_TGP_sim = FALSE     # whether to re-run TGP model for simulation
+fit_SPGP_app = FALSE    # whether to re-run SPGP model for precipitation data application
+fit_TGP_app = FALSE     # whether to re-run TGP model for precipitation data application
+```
+
+```{r excluded_vars}
+# variable names to keep in the environment (not to be cleared)
+excluded_vars = c(
+  "fit_SPGP_sim", "fit_TGP_sim", "fit_SPGP_app", "fit_TGP_app", 
+  "gen_sim_input", "excluded_vars"
+)
+```
+
+
+## Main Results in Simulation Studies
+
+This section reproduces main results in the simulation studies.
+
+```{r gen_sim_input}
+if (gen_sim_input) {
+  rm(list = setdiff(ls(), excluded_vars))
+  message("Re-generating simulation input data...")
+  source("R/generate_sim_data.R")
+}
+```
+
+
+```{r fit_SPGP_sim}
+if (fit_SPGP_sim) {
+  message("Re-running SPGP model fitting and prediction for simulation...")
+  
+  # fit SPGP and predict at hold-out locations
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/SPGP_sim_fit_model.R")
+  
+  # generate predictive field from SPGP on grid points
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/SPGP_sim_predictive_field.R")
+
+} else {
+  message("Loading pre-computed SPGP results for simulation...")
+}
+```
+
+```{r fit_TGP_sim}
+if (fit_TGP_sim) {
+  message("Re-running TGP model fitting and prediction for simulation...")
+  
+  # fit TGP and predict at hold-out locations
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/TGP_sim_fit_model.R")
+  
+  # generate predictive field from TGP on grid points
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/TGP_sim_predictive_field.R")
+
+} else {
+  message("Loading pre-computed TGP results for simulation...")
+}
+```
+
+```{r reproduce_sim}
+rm(list = setdiff(ls(), excluded_vars))
+message("Reproducing simulation results...")
+# generate figures and tables
+source("R/SPGP_sim_results.R")
+```
+
+### Table 1
+
+```{r table_1}
+knitr::kable(table_1, digits = 3)
+```
+
+### Figure 2
+
+```{r figure_2, fig.height = 4, fig.width = 10}
+print(figure_2)
+```
+
+### Figure 3
+
+```{r figure_3, fig.height = 3, fig.width = 6}
+print(figure_3_mean)
+print(figure_3_sd)
+```
+
+### Table S1
+
+```{r table_S1}
+knitr::kable(table_S1, digits = 3, col.names = NULL)
+```
+
+### Figure S4
+
+```{r figure_S4, fig.height = 2, fig.width = 6}
+print(figure_S4_bnd)
+print(figure_S4_int)
+```
+
+
+## Main Results in Real Data Analysis
+
+This section reproduces main results in the precipitation data analysis.
+
+```{r fit_SPGP_app}
+if (fit_SPGP_app) {
+  message("Re-running SPGP model fitting and prediction for real data analysis...")
+  
+  # choose L by DIC
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/SPGP_sim_select_L.R")
+  
+  # fit SPGP and predict at hold-out locations
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/SPGP_application_fit_model.R")
+  
+  # generate predictive field from SPGP on grid points
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/SPGP_application_predictive_field.R")
+
+} else {
+  message("Loading pre-computed SPGP results for real data analysis...")
+}
+```
+
+```{r fit_TGP_app}
+if (fit_TGP_app) {
+  message("Re-running TGP model fitting and prediction for real data analysis...")
+  
+  # fit TGP and predict at hold-out locations
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/TGP_application_fit_model.R")
+  
+  # generate predictive field from TGP on grid points
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/TGP_application_predictive_field.R")
+
+} else {
+  message("Loading pre-computed TGP results for real data analysis...")
+}
+```
+
+
+```{r reproduce_app}
+rm(list = setdiff(ls(), excluded_vars))
+message("Reproducing real data analysis results...")
+# generate figures and tables
+source("R/SPGP_application_results.R")
+```
+
+### Figure 4
+
+```{r figure_4, fig.height = 4, fig.width = 12}
+print(figure_4)
+```
+
+### Table 2
+
+```{r table_2}
+knitr::kable(table_2, digits = 3)
+```
+
+### Figure S7
+
+```{r figure_S7, fig.height = 3, fig.width = 6}
+print(figure_S7_mean)
+print(figure_S7_sd)
+```
+
+### Table S4
+
+```{r table_S4}
+knitr::kable(table_S4, digits = 3)
+```
