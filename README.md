@@ -25,7 +25,7 @@ This step is optional and only required if you want to re-run SPGP model fitting
 
 Please note that re-running these models can take several hours.
 
-**Step 4**: Run the workflow in `reproduce.Rmd` by compiling the R Markdown file. For example, this is can be done by running the following command in your terminal:
+**Step 4**: Run the workflow in `reproduce.Rmd` by compiling the R Markdown file. For example, this can be done by running the following command in your terminal:
 ```
 Rscript -e "rmarkdown::render('reproduce.Rmd')"
 ```
