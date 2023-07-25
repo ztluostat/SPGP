@@ -17,37 +17,6 @@ getEdgeStatus <- function(membership, graph0) {
   return(edge_status)
 }
 
-# function to split an existing cluster given MST
-splitCluster <- function(mstgraph, edge_status, k, membership) {
-  cluster = membership
-  # candidate edges to cut
-  ecand = E(mstgraph)[edge_status[E(mstgraph)$eid] == 'w']
-  edge_cutted = ecand[sample.int(length(ecand), 1)]
-  eid_cutted = edge_cutted$eid
-  # endpoints of the cutted edge, note v1$vid > v2$vid
-  v1 = head_of(mstgraph, edge_cutted)
-  #v2 = tail_of(mstgraph, edge_cutted)
-  clust_old = cluster[v1$vid]
-  # vertices in the same cluster of v1
-  idx_clust_old = (cluster == clust_old)
-  vset = V(mstgraph)[idx_clust_old]
-  mst_subgragh = induced_subgraph(mstgraph, vset)
-  # delete edge to split cluster
-  mst_subgragh = delete.edges(mst_subgragh, 
-                              E(mst_subgragh)[eid == eid_cutted])
-  
-  connect_comp = components(mst_subgragh)
-  cluster_new = connect_comp$membership
-  cluster_v1 = cluster_new[V(mst_subgragh)$vid == v1$vid]
-  idx_new = (cluster_new == cluster_v1)  # index for vertices belonging to new cluster
-  vid_new = vset$vid[idx_new] # vid for vertices belonging to new cluster
-  vid_old = vset$vid[!idx_new] # vid for vertices left in old cluster
-  cluster[vid_new] = k + 1
-  
-  return(list(cluster = cluster, vid_new = vid_new,
-              clust_old = clust_old, vid_old = vid_old))
-}
-
 splitCluster2 <- function(mstgraph, k, membership, csize, csize_obs_min, proj_size) { 
   cnt = 0
   while(TRUE) {
