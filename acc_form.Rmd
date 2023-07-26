@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+urlcolor: blue
+---
 <!--HOW TO COMPLETE THIS FORM:-->
 
 <!--
@@ -38,7 +43,7 @@ If box above is checked and if no simulated/synthetic data files are provided by
 <!--
 Provide a short (< 100 words), high-level description of the data
 -->
-The data analyzed in the paper consist of simulation data and precipitation data over the contiguous United States. The simulation data in Section 4 is generated via `R/generate_sim_data.R`. In Section 5, the data we used are average precipitation data aggregated from the daily data over October 1, 2017 to September 30, 2018. The daily data are originally from the Global Historical Climate Network-Daily database, preprocessed by Dr. Mark Risser, and publicly available at his [personal website](https://sites.google.com/site/markdrisser/data-sets?authuser=0). We only focus on observations at 1939 stations located to the west of $90^\circ$W, which are available in `data/CONUS_precip_west_18.csv`.
+The data analyzed in the paper consist of simulation data and precipitation data over the contiguous United States. The simulation data in Section 4 is generated via `R/generate_sim_data.R`. In Section 5, the data we used are average precipitation data aggregated from the daily data over October 1, 2017 to September 30, 2018. The daily data are originally from the Global Historical Climate Network-Daily database, preprocessed by Dr. Mark Risser, and publicly available at his [personal website](https://sites.google.com/site/markdrisser/data-sets?authuser=0). We focus on observations at 1939 stations located to the west of $90^\circ$W, which are available in `data/CONUS_precip_west_18.csv`.
 
 ## Availability
 
@@ -80,7 +85,7 @@ Please discuss the lack of publicly available data. For example:
 Check all that apply
 -->
 - [x] CSV or other plain text.
-- [x] Software-specific binary format (.Rda, Python pickle, etc.): pkcle
+- [x] Software-specific binary format (.Rda, Python pickle, etc.): .RData
 - [ ] Standardized binary format (e.g., netCDF, HDF5, etc.): 
 - [ ] Other (please specify):
 
@@ -104,7 +109,7 @@ OPTIONAL: Provide any additional details that would be helpful in understanding 
 
 ## Abstract
 
-The model implementation and data analysis in the paper were done in R. The `R` folder provides code for 1) generating simulation inputs, 2) fitting SPGP to simulation and precipitation data via Markov chain Monte Carlo (MCMC), 3) Bayesian predictive inference of SPGP, 4) obtaining results from the competing method TGP, and 5) reproducing key figures and tables in the paper.
+The model implementation and data analysis in the paper were done in R. The `R/` folder provides code for 1) generating simulation inputs, 2) fitting SPGP to simulation and precipitation data via Markov chain Monte Carlo (MCMC), 3) Bayesian predictive inference of SPGP, 4) obtaining results from the competing method TGP, and 5) reproducing key figures and tables in the paper.
 
 <!--
 Provide a short (< 100 words), high-level description of the code. If necessary, more details can be provided in files that accompany the code. If no code is provided, please state this and say why (e.g., if the paper contains no computational work).
@@ -127,7 +132,7 @@ Check all that apply
     - [ ] Python
     - [ ] MATLAB toolbox
     - [ ] Other: 
-- [ ] Reproducible report 
+- [x] Reproducible report 
     - [x] R Markdown
     - [ ] Jupyter notebook
     - [ ] Other:
@@ -179,7 +184,7 @@ OPTIONAL: System/hardware requirements including operating system with version n
 
 ### Additional information (optional)
 
-The code provided in this repository consists of a main R Markdown file`reproduce.Rmd`, which calls R scripts in `R/` to reproduce key results in the paper.
+The code provided in this repository consists of a main R Markdown file `reproduce.Rmd`, which calls R scripts in `R/` to reproduce key results in the paper.
 
 The R code in `R/` is organized as follows:
 
@@ -189,7 +194,7 @@ The R code in `R/` is organized as follows:
     
     * `SPGP_func_iso.R`: Code to implement isotropic SPGP model.
     
-    * `SPGP_sim_select_L.R`: Code select hyperparameter $L$ via DIC.
+    * `SPGP_sim_select_L.R`: Code to select hyperparameter $L$ via DIC.
     
     * `SPGP_sim_fit_model.R`: Code to fit SPGP model via MCMC and make prediction at hold-out locations.
     
@@ -234,7 +239,8 @@ The provided workflow reproduces:
 - [ ] Any numbers provided in text in the paper
 - [ ] The computational method(s) presented in the paper (i.e., code is provided that implements the method(s))
 - [ ] All tables and figures in the paper
-- [x] Selected tables and figures in the paper, as explained and justified below: All tables and figures related to SPGP and its main competitor TGP in Section 4 (Simulation Studies) and Section 5 (Real Data Analysis) in the paper are reproduced in this workflow. Supplementary results to Sections 4 and 5, as provided in Sections S3.2 and S4 respectively in the Supplementary Materials, are also reproduced.
+- [x] Selected tables and figures in the paper, as explained and justified below: This workflow reproduces all tables and figures related to SPGP and its main competitor TGP in the key sections of the paper, including 1) Section 4 (Simulation Studies), 2) Section 5 (Real Data Analysis), and 3) Sections S3.2 and S4 of the Supplementary Material, which provide supplementary results to Sections 4 and 5, respectively.
+
 
 ## Workflow
 
