@@ -67,7 +67,7 @@ n_knot = nrow(coords_knot)
 
 ## construct spatial graph on knots
 
-graph0 = graph0 = dentrigraph(coords_knot, threshold = 0.2)
+graph0 = dentrigraph(coords_knot, threshold = 0.2)
 E(graph0)$eid = c(1:ecount(graph0))  # edge id
 V(graph0)$vid = c(1:vcount(graph0))  # vertex id
 

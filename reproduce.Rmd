@@ -49,6 +49,10 @@ if (gen_sim_input) {
 if (fit_SPGP_sim) {
   message("Re-running SPGP model fitting and prediction for simulation...")
   
+  # choose L by DIC
+  rm(list = setdiff(ls(), excluded_vars))
+  source("R/SPGP_sim_select_L.R")
+  
   # fit SPGP and predict at hold-out locations
   rm(list = setdiff(ls(), excluded_vars))
   source("R/SPGP_sim_fit_model.R")
@@ -126,10 +130,6 @@ This section reproduces main results in the precipitation data analysis.
 ```{r fit_SPGP_app}
 if (fit_SPGP_app) {
   message("Re-running SPGP model fitting and prediction for real data analysis...")
-  
-  # choose L by DIC
-  rm(list = setdiff(ls(), excluded_vars))
-  source("R/SPGP_sim_select_L.R")
   
   # fit SPGP and predict at hold-out locations
   rm(list = setdiff(ls(), excluded_vars))
