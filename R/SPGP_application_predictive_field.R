@@ -5,7 +5,7 @@
 ### Load inputs and fitted model -----------------------------------------------
 
 # load grid points in CONUS
-load('data/precip_grid.RData')
+load('data/precip_grid_input.RData')
 coords_grid = as.matrix(coords_grid)
 n_grid = nrow(coords_grid)
 X_grid = matrix(1, ncol = 1, nrow = n_grid)

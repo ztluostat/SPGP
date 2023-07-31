@@ -164,7 +164,7 @@ res_all = foreach(pid = 1:n_params, .combine = rbind) %dopar% {
 
   ### Run MCMC for SPGP model ==================================================
   
-  mcmc_res = STGP(Y, X, coords, coords_knot, graph0, init_val, hyperpar, tunning, MCMC, BURNIN, THIN, 
+  mcmc_res = STGP_fit(Y, X, coords, coords_knot, graph0, init_val, hyperpar, tunning, MCMC, BURNIN, THIN, 
                   1234, NNGP = T, sample_latent = F, standardizeY = F, fix_proj = F)
 
   ### compute DIC for each L ===================================================
@@ -194,6 +194,8 @@ res_all = foreach(pid = 1:n_params, .combine = rbind) %dopar% {
   res = c(res, colMeans(scores), DIC_res)
   res
 }
+
+parallel::stopCluster(cl)
 
 ### Save results ---------------------------------------------------------------
 
