@@ -1,9 +1,5 @@
 # A Nonstationary Soft Partitioned Gaussian Process Model via Random Spanning Trees
 
-## Data
-
-## Code
-
 ## Instructions for use
 
 All workflow information to reproduce key results of the paper is contained in `reproduce.Rmd`. The steps for running the workflow are:
